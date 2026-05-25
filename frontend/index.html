@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang = "es">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <title>Procesador de imagenes</title>
+
+        <link rel="stylesheet" href="./styles.css"/>
+    </head>
+    <body>
+        <div class="image-processor-container">
+            <div class="image-processor-header">
+                <svg xmlns="http://www.w3.org/2000/svg" style="width: 2rem;" viewBox="0 0 448 512"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32zm64 80a48 48 0 1 1 0 96 48 48 0 1 1 0-96zM272 224c8.4 0 16.1 4.4 20.5 11.5l88 144c4.5 7.4 4.7 16.7 .5 24.3S368.7 416 360 416L88 416c-8.9 0-17.2-5-21.3-12.9s-3.5-17.5 1.6-24.8l56-80c4.5-6.4 11.8-10.2 19.7-10.2s15.2 3.8 19.7 10.2l26.4 37.8 61.4-100.5c4.4-7.1 12.1-11.5 20.5-11.5z"/></svg>
+                <h1>Procesador de imagenes</h1>
+            </div>
+            <div class="image-drag-drop" id="drop-zone">
+                <svg xmlns="http://www.w3.org/2000/svg" style="width: 2rem;" viewBox="0 0 448 512"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M256 109.3L256 320c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-210.7-41.4 41.4c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l96-96c12.5-12.5 32.8-12.5 45.3 0l96 96c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 109.3zM224 400c44.2 0 80-35.8 80-80l80 0c35.3 0 64 28.7 64 64l0 32c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64l0-32c0-35.3 28.7-64 64-64l80 0c0 44.2 35.8 80 80 80zm144 24a24 24 0 1 0 0-48 24 24 0 1 0 0 48z"/></svg>
+                <h3>Arrastra tu imagen aqui</h3>
+                <p>Tambien puedes dar click para buscar</p>
+                <input type="file" id="image-input" accept="image/*" hidden>
+            </div>
+            <div class="image-processor-options">
+                <h2>Opciones de procesamiento</h2>
+                <div class="processor-large-input">
+                    <h4>Formato de salida</h4>
+                    <select name="format" id="format-select">
+                        <option value="png">PNG</option>
+                        <option value="jpg">JPG</option>
+                        <option value="webp">WEBP</option>
+                        <option value="gif">GIF</option>
+                    </select>
+                </div>
+                <div class="processor-large-input">
+                    <h4>Aplicar filtro</h4>
+                    <select name="filter" id="filter-select">
+                        <option value="grayscale">Escala de grises</option>
+                        <option value="sepia">Sepia</option>
+                        <option value="invert">Invertida</option>
+                        <option value="blur">Difuminado</option>
+                        <option value="brightness">Luminoso</option>
+                        <option value="contrast">Contraste</option>
+                    </select>
+                </div>
+                <div class="processor-resize">
+                    <h4>Redimensionar imagen</h4>
+                    <div class="processor-small-inputs">
+                        <div class="small-input">
+                            <p>Ancho (px)</p>
+                            <input type="number" name="width" id="width-input">
+                        </div>
+                        <div class="small-input">
+                            <p>Alto (px)</p>
+                            <input type="number" name="height" id="height-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="processor-thumbnail">
+                    <div class="thumbnail-switch">
+                        <label class="switch">
+                        <input type="checkbox" id="processor-thumbnail-checkbox">
+                        <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <h4>Generar miniatura</h4>
+                </div>
+                <div class="processor-thumbnail-option" id="processor-thumbnail-option">
+                    <select name="thumbnail" id="thumbnail-size-select">
+                        <option value="64">64 px</option>
+                        <option value="128">128 px</option>
+                        <option value="256">256 px</option>
+                        <option value="512">512 px</option>
+                    </select>
+                </div>
+                <div class="processor-status">
+                    <h4>Estado del procesador de imagenes: <p class="status" id="status">En espera...</p></h4>
+                </div>
+            </div>
+            <div class="image-processor-button">
+                <button id="process-button">Procesar Imagen</button>
+            </div>
+        </div>
+        <script src="./app.js"></script>
+    </body>
+</html>

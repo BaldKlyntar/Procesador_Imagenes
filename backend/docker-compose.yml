@@ -1,0 +1,55 @@
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: image_processor_redis
+    ports:
+      - "6379:6379"
+
+  api:
+    build: .
+    container_name: image_processor_api
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_HOST=redis
+    volumes:
+      - ./uploads:/app/uploads
+      - ./processed:/app/processed
+    depends_on:
+      - redis
+
+  worker_1:
+    build: .
+    container_name: image_processor_worker_1
+    command: python worker.py
+    environment:
+      - REDIS_HOST=redis
+    volumes:
+      - ./uploads:/app/uploads
+      - ./processed:/app/processed
+    depends_on:
+      - redis
+
+  worker_2:
+    build: .
+    container_name: image_processor_worker_2
+    command: python worker.py
+    environment:
+      - REDIS_HOST=redis
+    volumes:
+      - ./uploads:/app/uploads
+      - ./processed:/app/processed
+    depends_on:
+      - redis
+
+  worker_3:
+    build: .
+    container_name: image_processor_worker_3
+    command: python worker.py
+    environment:
+      - REDIS_HOST=redis
+    volumes:
+      - ./uploads:/app/uploads
+      - ./processed:/app/processed
+    depends_on:
+      - redis
