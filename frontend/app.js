@@ -9,7 +9,7 @@ const filterSelect = document.getElementById("filter-select");
 const widthInput = document.getElementById("width-input");
 const heightInput = document.getElementById("height-input");
 const thumbnailSizeSelect = document.getElementById("thumbnail-size-select");
-const processorStatus = document.getElementById("status")
+const progressBar = document.getElementById("progress-bar");
 
 
 
@@ -82,6 +82,7 @@ const handleImageSelected = (file) => {
 //--------------------------------------------------- Process button Event Listener ----------------------------------------------------
 
 const handleProcessImage = async () => {
+    event.preventDefault()
     const file = imageInput.files[0];
 
     if(!file){
@@ -120,9 +121,38 @@ const handleProcessImage = async () => {
 
 processButton.addEventListener("click", handleProcessImage);
 
+const statusMap = {
+  pending: "Pendiente",
+  processing: "Procesando imagen",
+  completed: "Completado",
+  error: "Error"
+};
+
+const progressMap = {
+  pending: "25%",
+  processing: "50%",
+  completed: "100%",
+  error: "100%",
+};
+
 const updateTaskStatus = (status) => {
-    processorStatus.textContent = status
-}
+  const statusMap = {
+    pending: "Pendiente...",
+    processing: "Procesando imagen...",
+    completed: "Completado",
+    error: "Error al procesar",
+  };
+
+
+  progressBar.style.width =
+    progressMap[status] || "0%";
+
+  if(status === "completed" || status === "error"){
+    setTimeout(() => {
+        progressBar.style.width = "0%"
+    }, 2500)
+  }
+};
 
 const startTaskSSE = (taskId) => {
     const eventSource = new EventSource(
@@ -132,11 +162,13 @@ const startTaskSSE = (taskId) => {
     eventSource.addEventListener("status", (event) => {
         const data = JSON.parse(event.data);
 
+        console.log(data.status)
         updateTaskStatus(data.status);
 
         if (data.status === "completed" || data.status === "error"){
             eventSource.close();
         }
+
     });
 
     eventSource.onerror = () => {
