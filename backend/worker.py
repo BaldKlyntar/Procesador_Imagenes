@@ -2,6 +2,7 @@ from redis_client import redis_client
 from image_processor import process_image
 import json
 import time
+import time
 
 print("Worker iniciado...", flush=True)
 
@@ -22,6 +23,11 @@ while True:
 
         redis_client.set(
             f"task:{task_id}:status",
+            "pending"
+        )
+
+        redis_client.set(
+            f"task:{task_id}:status",
             "processing"
         )
 
@@ -30,6 +36,11 @@ while True:
         redis_client.set(
             f"task:{task_id}:status",
             output_path
+        )
+
+        redis_client.set(
+            f"task:{task_id}:status",
+            "completed"
         )
 
         print(f"Tarea completada: {task_id}", flush=True)

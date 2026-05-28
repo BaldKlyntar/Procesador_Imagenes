@@ -112,5 +112,3 @@ async def task_events(task_id: str):
     return EventSourceResponse(event_generator())
 
 
-
-
